@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  app:
+    image: ghcr.io/afink/ir-rpi-openhab-api:main
+    restart: always
+    environment:
+      DATABASE_HOST: db
+      DATABASE_DATABASE: db
+      DATABASE_USER: user
+      DATABASE_PASSWORD: password
+      SECRET_KEY: 'mysecretkey'
+    ports:
+      - 3002:3000
+    volumes:
+      - db:/var/lib/mysql
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    volumes:
+      - db:/var/lib/mysql
+
+
+volumes:
+  db:
